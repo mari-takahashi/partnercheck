@@ -6,6 +6,17 @@
 	</head>
 
 	<body>	
-		<p><strong>Callbackの着先だよ</strong></p>
+		<p><strong>あなたの来世のパートナーは誰だ？！</strong></p>
+		<p>
+			<% if @partner == nil %>
+			残念、、パートナーが見つかりません。来来世でがんばろう！
+			<% else %>
+			<img src="<%= @partner.picture %>">
+			<%= @partner.name %>
+			<% end %>
+		</p>
+		<form action="/share" method="post">
+			<input type="submit" value="結果をシェアする">
+		</form>
 	</body>
 </html>
