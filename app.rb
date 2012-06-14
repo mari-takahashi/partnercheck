@@ -4,16 +4,40 @@ require 'erb'
 require 'omniauth'
 require 'omniauth-facebook'
 require 'fb_graph'
+require 'mini_record'
+
+configure :production do
+  require 'pg'
+end
+
+configure :development do
+  require 'sqlite3'
+end
 
 enable :sessions
+
+configure do
+  db_config = YAML::load_file('config/database.yml')
+  ActiveRecord::Base.establish_connection(db_config[ENV['RACK_ENV']])
+  require './models/user'
+end
 
 use OmniAuth::Builder do
   provider :facebook, ENV['APP_ID'], ENV['APP_SECRET'], :scope => "email,publish_stream"
 end
 
-
 get '/auth/facebook/callback' do
   @auth = request.env['omniauth.auth']
+  @user = User.find_by_uid @auth[:uid]
+  if @user.nil?
+    @user = User.create({
+      :uid => @auth[:uid],
+      :name => @auth[:info][:name],
+      :image => @auth[:info][:image],
+      :token => @auth[:credentials][:token],
+      :secret => @auth[:credentials][:secret],
+    })
+  end
   access_token = @auth[:credentials][:token]
   user = FbGraph::User.me(access_token)
   user = user.fetch

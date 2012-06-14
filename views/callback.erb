@@ -3,21 +3,21 @@
 	<head>
 		<title>来世のパートナー診断</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" />
-		<link rel="stylesheet" type="text/css" media="screen,print" href="assets/stylesheets/main.css" />
+		<link rel="stylesheet" type="text/css" media="screen,print" href="stylesheets/main.css" />
 	</head>
 
 	<body>	
-		<p><strong>あなたの来世のパートナーは誰だ？！</strong></p>
+		<p class="title">あなたの来世のパートナーは誰だ？！</p>
 		<p>
 			<% if @partner == nil %>
 			残念、、パートナーが見つかりません。来来世でがんばろう！
 			<% else %>
 			<img src="<%= @partner.picture %>">
-			<%= @partner.name %>
+			<%= @partner.name %>さんです！
 			<% end %>
 		</p>
 		<form action="/share" method="post">
-			<button><input type="submit" value="結果をシェアする"></button>
+			<input type="submit" value="結果をシェアする">
 		</form>
 	</body>
 </html>
