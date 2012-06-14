@@ -7,4 +7,11 @@ gem 'fb_graph'
 
 group :development do
   gem 'heroku'
+  gem 'foreman'
+  gem 'sqlite3'
+end
+
+group :production do
+  gem 'thin'
+  gem 'pg'
 end
