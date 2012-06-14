@@ -41,6 +41,7 @@ post '/share' do
     if session[:partner_name]
       me.feed!(
       :message => '私の来世のパートナーはこの人でした！',
+      #:picture => 'https://graph.facebook.com/matake/picture',
       :link => session[:partner_link],
       #:link => 'https://github.com/nov/fb_graph',
       :name => session[:partner_name],
